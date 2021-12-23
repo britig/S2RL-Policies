@@ -1,0 +1,81 @@
+KinematicBicycleGymTurn-PPO:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 10
+    'lr': !!float 2.5e-3
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 500
+    
+KinematicBicycleGymTurn:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 20
+    'lr': !!float 2.5e-3
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 250
+    
+KinematicBicycleGymLane-PPO:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 10
+    'lr': !!float 2.5e-4
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 2000
+    
+KinematicBicycleGymLane:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 20
+    'lr': !!float 2.5e-3
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 350
+    
+    
+KinematicBicycleGymCutIn-PPO:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 10
+    'lr': !!float 2.5e-4
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 2000
+    
+KinematicBicycleGymCutIn:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 550
+    'gamma': 0.99
+    'n_updates_per_iteration': 10
+    'lr': !!float 2.5e-4
+    'clip': 0.1
+    'seed': 741
+    'training_step' : 600
+    
+KinematicBicycleGymACC-PPO:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 10
+    'lr': !!float 2.5e-4
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 1000
+    
+KinematicBicycleGymACC:
+    'timesteps_per_batch': 2048
+    'max_timesteps_per_episode': 500
+    'gamma': 0.99
+    'n_updates_per_iteration': 20
+    'lr': !!float 2.5e-3
+    'clip': 0.2
+    'seed': 741
+    'training_step' : 350
+ 
