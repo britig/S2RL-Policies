@@ -1,4 +1,4 @@
-# afe and Stable RL (S2RL) Driving Policies Using Control Barrier and Control Lyapunov Functions
+# Safe and Stable RL (S2RL) Driving Policies Using Control Barrier and Control Lyapunov Functions
 
 # System Requirements
 
