@@ -445,7 +445,7 @@ class KinematicBicycleGymCutIn(gym.Env):
 		self.ax = plt.axes()
 		self.ax.set_aspect('equal')
 
-		self.road = plt.Rectangle((30, 0), 50,50, color='gray', fill=False, linewidth=65)
+		self.road = plt.Rectangle((30, 0), 50,50, color='gray', fill=False, linewidth=115)
 		self.lane2 = plt.Rectangle((25, -5), 60,60, color='gold', fill=False, linestyle='--', linewidth=1.5)
 		self.lane1 = plt.Rectangle((35, 5), 45,40, color='gold', fill=False, linestyle='--', linewidth=1.5)
 
@@ -526,7 +526,11 @@ class KinematicBicycleGymCutIn(gym.Env):
 			self.annotation.set_position((self.car.x, self.car.y + 5))
 
 			plt.title(f'{self.sim.dt*frame:.2f}s', loc='right')
+			plt.title('Cut In Policy', loc='left')
 			plt.xlabel(f'Speed: {self.car.v:.2f} m/s', loc='left')
+			distance_fc = math.sqrt((self.car.x - self.car_fc.x)**2 + (self.car.y - self.car_fc.y)**2)
+			distance_sc = math.sqrt((self.car.x - self.car_sc.x)**2 + (self.car.y - self.car_sc.y)**2)
+			plt.xlabel(f'Distance Front Car: {distance_fc:.2f} m   Distance Side Car: {distance_sc:.2f} m', loc='left')
 			if myvar == len(action_list)-1:
 				plt.close() 
 				return None #exit()
@@ -536,6 +540,8 @@ class KinematicBicycleGymCutIn(gym.Env):
 
 		_ = FuncAnimation(self.fig, animate, frames=self.sim.frames, interval=self.interval, repeat=self.sim.loop)
 		# anim.save('animation.gif', writer='imagemagick', fps=50)
+		mng = plt.get_current_fig_manager()
+		mng.full_screen_toggle()
 		plt.show()
 
 

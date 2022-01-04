@@ -42,10 +42,6 @@ def _log_execution(count,speed,absolute_error,distance_fc,distance_sc):
 
 def test_ppo(env,actor_model):
 	done = False
-	#actor_model = 'ppo_actorKinematicBicycleGymCutIn.pth'
-	#actor_model = 'OriginalPPOCutIn/ppo_actorKinematicBicycleGymCutIn.pth'
-	#actor_model = 'GuidedAtEveryStepCutIN/ppo_actorKinematicBicycleGymCutIn.pth'
-	#actor_model = 'BestCutInGuidedPolicyOur/ppo_actorKinematicBicycleGymCutIn.pth'
 	policy = FeedForwardActorNN(5, 2,False)
 	policy.load_state_dict(torch.load(actor_model))
 	observation = env.reset()
@@ -113,11 +109,11 @@ if __name__ == "__main__":
 	if args.actor:
 		actor_model = args.actor
 	else:
-		actor_model = 'ACCS2RLPPO/ppo_actorKinematicBicycleGymACC.pth'
+		actor_model = 'Policies/ACCS2RLPPO/ppo_actorKinematicBicycleGymACC.pth'
 	if args.critic:
 		critic_model = args.critic
 	else:
-		critic_model = 'ACCS2RLPPO/ppo_criticKinematicBicycleGymACC.pth'
+		critic_model = 'Policies/ACCS2RLPPO/ppo_criticKinematicBicycleGymACC.pth'
 
 	#Load the hyperparameters
 
