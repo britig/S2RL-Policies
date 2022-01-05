@@ -10,3 +10,7 @@ S2RL	   		    |CLF-CBF Guided		| Vanilla PPO
 S2RL Lane Change Initial Speed 0   		    |S2RL Lane Change Initial Speed 10  		| S2RL Lane Change Initial Speed 15
 :-------------------------:|:------------------------:|:------------------------:
 ![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/S2RLeftLaneChangeSpeed0.gif)| ![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/S2RLeftLaneChangeSpeed10.gif)|![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/S2RLeftLaneChangeSpeed15.gif)
+
+Baseline PPO Lane Change Initial Speed 0   		    |Baseline PPO Lane Change Initial Speed 10  		| Baseline PPO Lane Change Initial Speed 15
+:-------------------------:|:------------------------:|:------------------------:
+![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/OriginalPPOLaneChangeSpeed0.gif)| ![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/OriginalPPOLaneChangeSpeed10.gif)|![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/OriginalPPOLaneChangeSpeed15.gif)
