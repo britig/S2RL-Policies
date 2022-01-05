@@ -313,37 +313,40 @@ class PPOGuided:
 		delta, target_id, crosstrack_error = self.env.car.tracker.stanley_control(self.env.x_ego, self.env.y_ego, self.env.yaw_ego, self.env.v_ego, self.env.delta_ego)
 		distance = 10
 		throttle = a_predicted_clf
-		if(round(self.env.x_ego,1) == round(self.env.car_fc.x,1)):
-			distance = self.env.distance_fc
-			vel_lead = self.env.car_fc.v
-			try:
-				a_predicted_cbf = cbf_control(self.env.v_ego,vel_lead,distance)
-			except:
-				a_predicted_cbf = -1.0
-			#print(f'distance before lc ======= {env.distance_fc}==speed===== {env.v_ego}')
-			if(distance < 6):
-				throttle = a_predicted_cbf
-		#Car in sc vehicles path
-		elif(round(self.env.x_ego,1) == round(self.env.car_sc.x,1)):
-			distance = self.env.car_sc.y - self.env.y_ego
-			vel_lead = self.env.car_sc.v
-			try:
-				a_predicted_cbf = cbf_control(self.env.v_ego,vel_lead,distance)
-			except:
-				a_predicted_cbf = -1.0
-			if(distance < 8):
-				throttle = a_predicted_cbf
-		# Car doing a lane change
-		else:
-			distance = math.sqrt((self.env.x_ego - self.env.car_sc.x)**2 + (self.env.y_ego - self.env.car_sc.y)**2)-1.5
-			vel_lead = self.env.car_sc.v
-			try:
-				a_predicted_cbf = cbf_control(self.env.v_ego,vel_lead,distance)
-			except:
-				a_predicted_cbf = -1.0
-			#print(f'distance at lc ======= {(env.distance_fc,env.distance_sc)}==speed===== {env.v_ego}')
-			if(distance < 10):
-				throttle = -a_predicted_cbf
+		try:
+			if(round(self.env.x_ego,1) == round(self.env.car_fc.x,1)):
+				distance = self.env.distance_fc
+				vel_lead = self.env.car_fc.v
+				try:
+					a_predicted_cbf = cbf_control(self.env.v_ego,vel_lead,distance)
+				except:
+					a_predicted_cbf = -1.0
+				#print(f'distance before lc ======= {env.distance_fc}==speed===== {env.v_ego}')
+				if(distance < 6):
+					throttle = a_predicted_cbf
+			#Car in sc vehicles path
+			elif(round(self.env.x_ego,1) == round(self.env.car_sc.x,1)):
+				distance = self.env.car_sc.y - self.env.y_ego
+				vel_lead = self.env.car_sc.v
+				try:
+					a_predicted_cbf = cbf_control(self.env.v_ego,vel_lead,distance)
+				except:
+					a_predicted_cbf = -1.0
+				if(distance < 8):
+					throttle = a_predicted_cbf
+			# Car doing a lane change
+			else:
+				distance = math.sqrt((self.env.x_ego - self.env.car_sc.x)**2 + (self.env.y_ego - self.env.car_sc.y)**2)-1.5
+				vel_lead = self.env.car_sc.v
+				try:
+					a_predicted_cbf = cbf_control(self.env.v_ego,vel_lead,distance)
+				except:
+					a_predicted_cbf = -1.0
+				#print(f'distance at lc ======= {(env.distance_fc,env.distance_sc)}==speed===== {env.v_ego}')
+				if(distance < 10):
+					throttle = -a_predicted_cbf
+		except:
+			pass
 
 		return throttle,delta
 

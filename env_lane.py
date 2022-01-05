@@ -161,6 +161,10 @@ class KinematicBicycleGymLane(gym.Env):
 			 0))
 
 		self.vel_dict = {'0':[0.0,24],'1':[10,11],'2':[15,-7]}
+
+		#Distance
+		self.distance_fc = 10
+		self.distance_sc = 10
 			
 		#Environment variables
 		self.x_target = self.path.x_path[-1]
@@ -168,7 +172,7 @@ class KinematicBicycleGymLane(gym.Env):
 		#self.check_x_target = 30.0
 		#self.check_y_target = 47.0
 		# Set desired velocity
-		self.random_generator = 2 #rand.randint(0,2)
+		self.random_generator =  2 #rand.randint(0,2)
 		self.v_ego = self.vel_dict[str(self.random_generator)][0] #Ego vehicle's velocity
 		self.car.v = self.v_ego 
 		self.v_desired = self.vel_dict[str(self.random_generator)][1] #Desired Velocity
@@ -193,15 +197,15 @@ class KinematicBicycleGymLane(gym.Env):
 		
 		done = False
 		reward = 0
+		stable_criteria = False
+		safety_criteria = True
 
 		#Extract throttle and steering information
 		throttle = action[0]
 		delta = action[1]
-		# Normalizing the throttle and steering within the desired range
-		'''if throttle < 0.3 or throttle > 1.35:
-			throttle = (np.clip(action[0], 0.0,1.0)+0.28)*1.1   # 0.5..1.0
-		assert throttle >= 0.3 and throttle <= 1.45
-		delta = np.clip(delta,-0.6,0.2)'''
+
+		v_previous = self.v_ego
+		absolute_error_range = 0.2
 
 
 		target_index, dx, dy, absolute_error = self.car.tracker.find_target_path_id(self.x_ego, self.y_ego, self.yaw_ego)
@@ -212,33 +216,37 @@ class KinematicBicycleGymLane(gym.Env):
 		# Use local variables we don't want these to effect the environment
 		x_ego, y_ego, yaw_ego, v_ego = self.car.drive_dummy(throttle,delta)
 
-		diff_target = np.sqrt((x_ego-self.x_target)**2 + (y_ego-self.y_target)**2)
+
+		target_index, dx, dy, absolute_error = self.car.tracker.find_target_path_id(self.x_ego, self.y_ego, self.yaw_ego)
+		yaw_error = self.car.tracker.calculate_yaw_term(target_index, self.yaw_ego)
+		crosstrack_steering_error, crosstrack_error = self.car.tracker.calculate_crosstrack_term(self.v_ego, self.yaw_ego, dx, dy, absolute_error)
+
+		#Check for stability of the lookahead state
+		# 1. If velocity is better than the previous velocity but still within desired bounds
+		# 2. If the absolute error is within bounds
+		if v_ego > v_previous and v_ego < self.v_desired and absolute_error <=absolute_error_range:
+			stable_criteria = True
 
 		reward_speed_tracking = -abs(v_ego - self.v_desired)*0.1
-		reward_orientation_tracking = crosstrack_error
-
-
 		reward = reward + reward_speed_tracking+crosstrack_error
 		#print(f'reward === {reward}')
 		reward = reward - absolute_error
 		if(round(absolute_error) == 0):
 			reward = reward + 1+self.counter 
 
-		if(diff_target < 1):
-			reward = reward + 100
+		if(self.diff_target < 2):
+			reward = reward + 500
 			done = True
 
-		if(self.counter > 400 or absolute_error>7):
-			reward = reward + self.counter*0.5
+		if(self.counter > 500 or absolute_error>7):
+			#reward = reward + self.counter*0.5
 			done = True
 			reward = reward - 500
-
-		obs = self.feature_scaling(np.hstack((x_ego,y_ego,v_ego, (self.v_desired-v_ego),diff_target)))
 
 		info = [throttle,delta]
 		#info = {}
 
-		return np.array(obs, dtype=np.float32),reward,done,info
+		return stable_criteria,safety_criteria,reward,done,info
 
 	
 	
@@ -395,6 +403,7 @@ class KinematicBicycleGymLane(gym.Env):
 			self.annotation.set_position((self.car.x, self.car.y + 5))
 
 			plt.title(f'{self.sim.dt*frame:.2f}s', loc='right')
+			plt.title('Left Lane Change Policy', loc='left')
 			plt.xlabel(f'Speed: {self.car.v:.2f} m/s', loc='left')
 			if myvar == len(action_list)-1:
 				plt.close() 
