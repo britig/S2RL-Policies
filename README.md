@@ -35,13 +35,13 @@ The pre-trained policies are available in the Policies folder. Following environ
 1) KinematicBicycleGymCutACC - Straight Drive with limited steering
 2) KinematicBicycleGymTurn - Training Left/Right Turning agents
 3) KinematicBicycleGymLane - Training Left/Right Lane change
-4) KinematicBicycleGymCutIn - Training Left/Right Lane change
+4) KinematicBicycleGymCutIn - Training Left/Right Cut In
 
 The main program takes the following command line arguments
 
 1) --env : environment name (default is KinematicBicycleGymCutACC)
-2) --actor : filepath to the actor network (default is ACCS2RLPPO/ppo_actorKinematicBicycleGymACC.pth)
-3) --critic : filepath to the critic network (default is ACCS2RLPPO/ppo_criticKinematicBicycleGymACC.pth)
+2) --actor : filepath to the actor network (default is Policies/ACCS2RLPPO/ppo_actorKinematicBicycleGymACC.pth)
+3) --critic : filepath to the critic network (default is Policies/ACCS2RLPPO/ppo_criticKinematicBicycleGymACC.pth)
 
 The hyperparameters can be changed in the hyperparameters.yml file
 
