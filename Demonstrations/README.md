@@ -17,4 +17,4 @@ Baseline PPO Lane Change Initial Speed 0m/s   		    |Baseline PPO Lane Change In
 
 ## Demonstration on complex road structure
 
-![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/complex.gif)
+![](https://github.com/britig/S2RL-Policies/blob/main/Demonstrations/S2RLComplex.gif)
