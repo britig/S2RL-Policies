@@ -1,5 +1,8 @@
 # Safe and Stable RL (S2RL) Driving Policies Using Control Barrier and Control Lyapunov Functions
 
+This repository contains code for the paper Safe and Stable RL (S2RL) Driving Policies Using Control Barrier and Control Lyapunov Functions
+Publication Link : https://ieeexplore.ieee.org/document/9737420
+
 # System Requirements
 
 The code has been tested in systems with the following OS
